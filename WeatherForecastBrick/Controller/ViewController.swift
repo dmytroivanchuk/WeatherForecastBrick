@@ -23,6 +23,8 @@ class ViewController: UIViewController {
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+        
+        weatherManager.delegate = self
 
         infoButton.layer.cornerRadius = 15
         infoButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -32,17 +34,52 @@ class ViewController: UIViewController {
     }
 }
 
+//MARK: - CLLocationManagerDelegate Methods
+
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             locationManager.stopUpdatingLocation()
-            let latitude = location.coordinate.latitude
-            let longitude = location.coordinate.longitude
-            weatherManager.fetchWeather(latitude: latitude, longitude: longitude)
+            let lat = location.coordinate.latitude
+            let long = location.coordinate.longitude
+            weatherManager.fetchWeather(latitude: lat, longitude: long)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
+}
+
+//MARK: - WeatherManagerDelegate Methods
+
+extension ViewController: WeatherManagerDelegate {
+    
+    func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = "\(weather.temperatureString)°"
+            self.weatherConditionLabel.text = weather.condition
+            
+            let fullString = NSMutableAttributedString(string: "")
+            
+            let image1Attachment = NSTextAttachment()
+            image1Attachment.image = UIImage(named: "icon_location.png")
+            let image1String = NSAttributedString(attachment: image1Attachment)
+            
+            let image2Attachment = NSTextAttachment()
+            image2Attachment.image = UIImage(named: "icon_search.png")
+            let image2String = NSAttributedString(attachment: image2Attachment)
+            
+            fullString.append(image1String)
+            fullString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
+            fullString.append(image2String)
+            
+            
+            self.locationLabel.attributedText = fullString
+        }
+    }
+    
+    func didFailWithError(error: Error) {
         print(error)
     }
 }

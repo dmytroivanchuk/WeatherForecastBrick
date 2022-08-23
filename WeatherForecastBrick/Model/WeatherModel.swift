@@ -5,13 +5,21 @@
 //  Created by Dmytro Ivanchuk on 23.08.2022.
 //
 
+import CoreLocation
+
 struct WeatherModel {
     let conditionId: Int
-    let cityName: String
+    let condition: String
     let temperature: Double
+    let countryCode: String
+    let cityName: String
+    
+    var countryName: String? {
+        Locale(identifier: countryCode).localizedString(forRegionCode: countryCode)
+    }
     
     var temperatureString: String {
-        return String(format: "%.1f", temperature)
+        String(format: "%.0f", temperature)
     }
     
     var conditionName: String {

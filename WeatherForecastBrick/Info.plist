@@ -28,5 +28,7 @@
 		<string>Ubuntu-Medium.ttf</string>
 		<string>Ubuntu-Bold.ttf</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This allows us to use your location to show you the current weather for your region.</string>
 </dict>
 </plist>
