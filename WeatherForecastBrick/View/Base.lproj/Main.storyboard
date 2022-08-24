@@ -30,23 +30,23 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_background" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-Di-eoQ">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sunny" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-C8-rxU">
-                                <rect key="frame" x="83" y="0.0" width="224" height="460"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-C8-rxU">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="460"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gz-fF-fdu">
-                                <rect key="frame" x="20" y="490" width="122" height="94"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gz-fF-fdu">
+                                <rect key="frame" x="20" y="490" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Regular" family="Ubuntu" pointSize="83"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sunny" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKh-Rc-iBU">
-                                <rect key="frame" x="20" y="584" width="94" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKh-Rc-iBU">
+                                <rect key="frame" x="20" y="490" width="0.0" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Light" family="Ubuntu" pointSize="36"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="􀈠 Ivano-Frankivsk, Ukraine 􀊫" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPX-Bw-dgo">
-                                <rect key="frame" x="20" y="715" width="350" height="19.333333333333371"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IPX-Bw-dgo">
+                                <rect key="frame" x="20" y="715" width="350" height="0.0"/>
                                 <fontDescription key="fontDescription" name="Ubuntu-Medium" family="Ubuntu" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -67,6 +67,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="1tg-C8-rxU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1gT-bf-Xtc"/>
                             <constraint firstItem="7wt-JF-duj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="trailing" multiplier="100/390" id="GfF-uZ-zii"/>
                             <constraint firstItem="7wt-JF-duj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="770/844" id="HiX-pH-76W"/>
                             <constraint firstItem="1tg-C8-rxU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="J7F-zt-aDI"/>
@@ -79,6 +80,7 @@
                             <constraint firstItem="1tg-C8-rxU" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="460/844" id="R6H-Mt-Z3g"/>
                             <constraint firstItem="IPX-Bw-dgo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="715/844" id="Rpj-nI-rrc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SKh-Rc-iBU" secondAttribute="trailing" symbolic="YES" id="UT7-dP-Spp"/>
+                            <constraint firstItem="1tg-C8-rxU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="X78-og-YeH"/>
                             <constraint firstItem="SKh-Rc-iBU" firstAttribute="leading" secondItem="6gz-fF-fdu" secondAttribute="leading" id="XdQ-Xz-LUg"/>
                             <constraint firstAttribute="trailing" secondItem="aTo-Di-eoQ" secondAttribute="trailing" id="Y5H-iv-58Q"/>
                             <constraint firstItem="6gz-fF-fdu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="490/844" id="aCw-nE-Mbl"/>
@@ -93,6 +95,7 @@
                         <outlet property="infoButton" destination="7wt-JF-duj" id="dpC-7E-VeV"/>
                         <outlet property="locationLabel" destination="IPX-Bw-dgo" id="MmJ-PB-r8s"/>
                         <outlet property="temperatureLabel" destination="6gz-fF-fdu" id="5pN-8w-vbV"/>
+                        <outlet property="weatherConditionImageView" destination="1tg-C8-rxU" id="VuP-PA-SdQ"/>
                         <outlet property="weatherConditionLabel" destination="SKh-Rc-iBU" id="xM5-ai-IPR"/>
                     </connections>
                 </viewController>
@@ -103,7 +106,6 @@
     </scenes>
     <resources>
         <image name="image_background" width="375" height="811"/>
-        <image name="sunny" width="224" height="455"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -22,24 +22,18 @@ struct WeatherModel {
         String(format: "%.0f", temperature)
     }
     
-    var conditionName: String {
+    var conditionImage: String {
         switch conditionId {
-        case 200...232:
-            return "cloud.bolt"
-        case 300...321:
-            return "cloud.drizzle"
-        case 500...531:
-            return "cloud.rain"
+        case 200...531:
+            return "rain.png"
         case 600...622:
-            return "cloud.snow"
+            return "snow.png"
         case 701...781:
-            return "cloud.fog"
-        case 800:
-            return "sun.max"
-        case 801...804:
-            return "cloud"
+            return "fog.png"
+        case 800...804:
+            return temperature < 30 ? "sun.png" : "sun_veryHot.png"
         default:
-            return "cloud"
+            return "sun.png"
         }
     }
 }

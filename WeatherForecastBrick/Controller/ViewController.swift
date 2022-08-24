@@ -10,6 +10,7 @@ import CoreLocation
 
 class ViewController: UIViewController {
 
+    @IBOutlet var weatherConditionImageView: UIImageView!
     @IBOutlet var temperatureLabel: UILabel!
     @IBOutlet var weatherConditionLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
@@ -22,7 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
+        locationManager.startUpdatingLocation()
         
         weatherManager.delegate = self
 
@@ -57,6 +58,7 @@ extension ViewController: WeatherManagerDelegate {
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
         DispatchQueue.main.async {
+            self.weatherConditionImageView.image = UIImage(named: weather.conditionImage)
             self.temperatureLabel.text = "\(weather.temperatureString)°"
             self.weatherConditionLabel.text = weather.condition
             
@@ -73,7 +75,6 @@ extension ViewController: WeatherManagerDelegate {
             fullString.append(image1String)
             fullString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
             fullString.append(image2String)
-            
             
             self.locationLabel.attributedText = fullString
         }
