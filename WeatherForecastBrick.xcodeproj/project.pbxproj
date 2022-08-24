@@ -20,6 +20,7 @@
 		0208715528B431C80027910B /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715428B431C80027910B /* WeatherManager.swift */; };
 		0208715728B4327E0027910B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715628B4327E0027910B /* WeatherModel.swift */; };
 		0208715928B432BC0027910B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715828B432BC0027910B /* WeatherData.swift */; };
+		0208715F28B682E50027910B /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715E28B682E40027910B /* CustomAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		0208715428B431C80027910B /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		0208715628B4327E0027910B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		0208715828B432BC0027910B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		0208715E28B682E40027910B /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			children = (
 				0208713A28B402360027910B /* Main.storyboard */,
 				0208713F28B402380027910B /* LaunchScreen.storyboard */,
+				0208715E28B682E40027910B /* CustomAlert.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				0208713728B402360027910B /* SceneDelegate.swift in Sources */,
 				0208715928B432BC0027910B /* WeatherData.swift in Sources */,
 				0208715728B4327E0027910B /* WeatherModel.swift in Sources */,
+				0208715F28B682E50027910B /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var infoButton: UIButton!
     
+    let customAlert = CustomAlert()
+    
     let locationManager = CLLocationManager()
     var weatherManager = WeatherManager()
     
@@ -26,12 +28,32 @@ class ViewController: UIViewController {
         locationManager.startUpdatingLocation()
         
         weatherManager.delegate = self
-
-        infoButton.layer.cornerRadius = 15
-        infoButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        customAlert.delegate = self
+        
+        configureInfoButton()
     }
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
+        customAlert.showAlert(on: self, title: "INFO", message: "Brick is wet - raining\nBrick is dry - sunny\nBrick is hard to see - fog\nBrick with cracks - very hot\nBrick with snow - snow\nBrick is swinging- windy\nBrick is gone - No Internet")
+        weatherConditionImageView.isHidden = true
+        temperatureLabel.isHidden = true
+        weatherConditionLabel.isHidden = true
+        locationLabel.isHidden = true
+        infoButton.isHidden = true
+        
+    }
+    
+    //MARK: - UIElements Property Configuration Methods
+    
+    func configureInfoButton() {
+        if let lightOrange = UIColor(named: "lightOrange")?.cgColor, let darkOrange = UIColor(named: "darkOrange")?.cgColor {
+            infoButton.applyGradient(colors: [lightOrange, darkOrange])
+        }
+        
+        infoButton.layer.shadowColor = UIColor.black.cgColor
+        infoButton.layer.shadowOffset = CGSize(width: 3, height: 0)
+        infoButton.layer.shadowRadius = 3
+        infoButton.layer.shadowOpacity = 0.3
     }
 }
 
@@ -85,3 +107,29 @@ extension ViewController: WeatherManagerDelegate {
     }
 }
 
+//MARK: - CustomAlert Delegate Methods
+
+extension ViewController: CustomAlertDelegate {
+    func updateView() {
+        weatherConditionImageView.isHidden = false
+        temperatureLabel.isHidden = false
+        weatherConditionLabel.isHidden = false
+        locationLabel.isHidden = false
+        infoButton.isHidden = false
+    }
+}
+
+extension UIButton
+{
+    func applyGradient(colors: [CGColor])
+    {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.frame = self.bounds
+        gradientLayer.cornerRadius = 15
+        gradientLayer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
