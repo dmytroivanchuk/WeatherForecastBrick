@@ -30,8 +30,8 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_background" translatesAutoresizingMaskIntoConstraints="NO" id="aTo-Di-eoQ">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-C8-rxU">
-                                <rect key="frame" x="0.0" y="0.0" width="390" height="460"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noInternet" translatesAutoresizingMaskIntoConstraints="NO" id="1tg-C8-rxU">
+                                <rect key="frame" x="0.0" y="-50" width="390" height="480"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_ _" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6gz-fF-fdu">
                                 <rect key="frame" x="20" y="489.99999999999994" width="101" height="93.333333333333314"/>
@@ -69,14 +69,14 @@
                             <constraint firstItem="1tg-C8-rxU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1gT-bf-Xtc"/>
                             <constraint firstItem="7wt-JF-duj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="trailing" multiplier="100/390" id="GfF-uZ-zii"/>
                             <constraint firstItem="7wt-JF-duj" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="775/844" id="HiX-pH-76W"/>
-                            <constraint firstItem="1tg-C8-rxU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="J7F-zt-aDI"/>
+                            <constraint firstItem="1tg-C8-rxU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="-50" id="J7F-zt-aDI"/>
                             <constraint firstItem="aTo-Di-eoQ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="K0P-VT-dnt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6gz-fF-fdu" secondAttribute="trailing" symbolic="YES" id="Kv5-Kz-xvn"/>
                             <constraint firstItem="aTo-Di-eoQ" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="OE8-lZ-tN1"/>
                             <constraint firstAttribute="bottom" secondItem="aTo-Di-eoQ" secondAttribute="bottom" id="OGq-AM-hCb"/>
                             <constraint firstItem="1tg-C8-rxU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QG4-iO-1hA"/>
                             <constraint firstItem="SKh-Rc-iBU" firstAttribute="top" secondItem="6gz-fF-fdu" secondAttribute="bottom" id="QK7-Vs-qYy"/>
-                            <constraint firstItem="1tg-C8-rxU" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="460/844" id="R6H-Mt-Z3g"/>
+                            <constraint firstItem="1tg-C8-rxU" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="430/844" id="R6H-Mt-Z3g"/>
                             <constraint firstItem="IPX-Bw-dgo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="bottom" multiplier="715/844" id="Rpj-nI-rrc"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SKh-Rc-iBU" secondAttribute="trailing" symbolic="YES" id="UT7-dP-Spp"/>
                             <constraint firstItem="1tg-C8-rxU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="X78-og-YeH"/>
@@ -105,6 +105,7 @@
     </scenes>
     <resources>
         <image name="image_background" width="375" height="811"/>
+        <image name="noInternet" width="74.666664123535156" height="151.66667175292969"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
