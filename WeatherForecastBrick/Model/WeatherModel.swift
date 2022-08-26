@@ -7,6 +7,7 @@
 
 import CoreLocation
 
+// create WeatherModel struct, responsible for storing ready-to-use weather data
 struct WeatherModel {
     let conditionId: Int
     let condition: String

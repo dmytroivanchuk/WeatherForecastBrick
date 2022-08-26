@@ -5,6 +5,7 @@
 //  Created by Dmytro Ivanchuk on 23.08.2022.
 //
 
+// create WeatherData struct, responsible for decoding data from JSON Object
 struct WeatherData: Codable {
     let weather: [Weather]
     let main: Main

@@ -12,6 +12,7 @@ protocol WeatherManagerDelegate {
     func didFailWithError(error: Error)
 }
 
+// create WeatherManager struct, responsible for fetching current weather data using public API, based on user's coordinates
 struct WeatherManager {
     let weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=66a5e7323ac6dd5cf801a2be0c946647&units=metric"
     
@@ -20,7 +21,6 @@ struct WeatherManager {
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
-        print(urlString)
     }
     
     func performRequest(with urlString: String) {

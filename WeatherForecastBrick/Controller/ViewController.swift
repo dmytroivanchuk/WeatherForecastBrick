@@ -10,15 +10,15 @@ import CoreLocation
 
 class ViewController: UIViewController {
 
-    @IBOutlet var weatherConditionImageView: UIImageView!
+    @IBOutlet var weatherBrickImageView: UIImageView!
     @IBOutlet var temperatureLabel: UILabel!
     @IBOutlet var weatherConditionLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var infoButton: UIButton!
     
-    let locationManager = CLLocationManager()
-    var weatherManager = WeatherManager()
-    let customAlert = CustomAlert()
+    private let locationManager = CLLocationManager()
+    private var weatherManager = WeatherManager()
+    private let customAlert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,25 +30,26 @@ class ViewController: UIViewController {
         customAlert.delegate = self
         
         configureInfoButton()
-        
-        setupCard()
+        configureGestureRecognizers()
     }
     
     @IBAction func infoButtonPressed(_ sender: UIButton) {
-        customAlert.showAlert(on: self, title: "INFO", message: "Brick is wet - raining\nBrick is dry - sunny\nBrick is hard to see - fog\nBrick with cracks - very hot\nBrick with snow - snow\nBrick is swinging- windy\nBrick is gone - No Internet")
-        weatherConditionImageView.isHidden = true
-        temperatureLabel.isHidden = true
-        weatherConditionLabel.isHidden = true
-        locationLabel.isHidden = true
-        infoButton.isHidden = true
-        
+        customAlert.presentAlert(on: self, title: "INFO", message: "Brick is wet - raining\nBrick is dry - sunny\nBrick is hard to see - fog\nBrick with cracks - very hot\nBrick with snow - snow\nBrick is swinging- windy\nBrick is gone - No Internet")
     }
     
-    //MARK: - UIElements Property Configuration Methods
+    //MARK: - UI Elements Property Configuration Methods
     
     func configureInfoButton() {
+        // apply specified color gradient to infoButton
         if let lightOrange = UIColor(named: "lightOrange")?.cgColor, let darkOrange = UIColor(named: "darkOrange")?.cgColor {
-            infoButton.applyGradient(colors: [lightOrange, darkOrange])
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [lightOrange, darkOrange]
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+            gradientLayer.endPoint = CGPoint(x: 0, y: 0 + 0.5)
+            gradientLayer.frame = infoButton.bounds
+            gradientLayer.cornerRadius = 15
+            gradientLayer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            infoButton.layer.insertSublayer(gradientLayer, at: 0)
         }
         
         infoButton.layer.shadowColor = UIColor.black.cgColor
@@ -57,98 +58,102 @@ class ViewController: UIViewController {
         infoButton.layer.shadowOpacity = 0.3
     }
     
+    func updateViewWithNoInternetConnection() {
+        self.weatherBrickImageView.image = UIImage(named: "noInternet.png")
+        self.temperatureLabel.text = "_ _"
+        self.weatherConditionLabel.text = "_"
+        self.locationLabel.text = "_ _"
+    }
+    
     //MARK: - Refresh Weather Functionality
     
     var runningAnimations = [UIViewPropertyAnimator]()
-    var animationProgressWhenInterrupted:CGFloat = 0
+    let animationDuration: TimeInterval = 0.2
+    let animationLength: CGFloat = 50
+    var animationProgressWhenInterrupted: CGFloat = 0
     let tapticFeedback = UINotificationFeedbackGenerator()
     
-    func setupCard() {
-    
-                weatherConditionImageView.clipsToBounds = true
-    
-                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleCardTap(recognzier:)))
-                let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handleCardPan(recognizer:)))
-    
-                weatherConditionImageView.addGestureRecognizer(tapGestureRecognizer)
-                weatherConditionImageView.addGestureRecognizer(panGestureRecognizer)
-                weatherConditionImageView.isUserInteractionEnabled = true
-            }
-    
-            @objc
-            func handleCardTap(recognzier:UITapGestureRecognizer) {
-                switch recognzier.state {
-                case .ended:
-                    animateTransition(duration: 0.2)
-                default:
-                    break
-                }
-            }
-    
-            @objc
-            func handleCardPan (recognizer:UIPanGestureRecognizer) {
-                switch recognizer.state {
-                case .began:
-                    startInteractiveTransition(duration: 0.2)
-                case .changed:
-                    let translation = recognizer.translation(in: weatherConditionImageView)
-                    let fractionComplete = translation.y / 50
-                    updateInteractiveTransition(fractionCompleted: fractionComplete)
-                case .ended:
-                    continueInteractiveTransition()
-                default:
-                    break
-                }
+    func configureGestureRecognizers() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleTap(recognzier:)))
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(ViewController.handlePan(recognizer:)))
 
-            }
+        weatherBrickImageView.addGestureRecognizer(tapGestureRecognizer)
+        weatherBrickImageView.addGestureRecognizer(panGestureRecognizer)
+        weatherBrickImageView.isUserInteractionEnabled = true
+    }
     
-            func animateTransition(duration:TimeInterval) {
-                let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
-                    self.weatherConditionImageView.frame.origin.y += 50
-                }
-                frameAnimator.startAnimation()
-                runningAnimations.append(frameAnimator)
-                
-                frameAnimator.addCompletion { _ in
-                    
-                    let backframeAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
-                        self.weatherConditionImageView.frame.origin.y -= 50
-                    }
-                    backframeAnimator.startAnimation()
-                    self.runningAnimations.append(backframeAnimator)
-                    
-                    backframeAnimator.addCompletion { _ in
-                        self.runningAnimations.removeAll()
-                        
-                        self.locationManager.startUpdatingLocation()
-                        self.tapticFeedback.notificationOccurred(.success)
-                    }
-                }
+    // response to user's tap gestures
+    @objc func handleTap(recognzier: UITapGestureRecognizer) {
+        switch recognzier.state {
+        case .ended:
+            animateTransition(duration: animationDuration)
+        default:
+            break
+        }
+    }
+    
+    // response to user's pull gestures
+    @objc func handlePan(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            startInteractiveTransition(duration: animationDuration)
+        case .changed:
+            let translation = recognizer.translation(in: weatherBrickImageView)
+            let fractionComplete = translation.y / animationLength
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
+        case .ended:
+            continueInteractiveTransition()
+        default:
+            break
+        }
+    }
+    
+    // animate weatherBrickImageView and update user location as animations complete
+    func animateTransition(duration: TimeInterval) {
+        let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+            self.weatherBrickImageView.frame.origin.y += 50
+        }
+        frameAnimator.startAnimation()
+        runningAnimations.append(frameAnimator)
+        
+        frameAnimator.addCompletion { _ in
+            
+            let backframeAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+                self.weatherBrickImageView.frame.origin.y -= 50
             }
+            backframeAnimator.startAnimation()
+            self.runningAnimations.append(backframeAnimator)
+            
+            backframeAnimator.addCompletion { _ in
+                self.runningAnimations.removeAll()
+                
+                self.locationManager.startUpdatingLocation()
+                self.tapticFeedback.notificationOccurred(.success)
+            }
+        }
+    }
     
     func startInteractiveTransition(duration:TimeInterval) {
-                if runningAnimations.isEmpty {
-                    animateTransition(duration: duration)
-                }
-                for animator in runningAnimations {
-                    animator.pauseAnimation()
-                    animationProgressWhenInterrupted = animator.fractionComplete
-                }
-            }
+        if runningAnimations.isEmpty {
+            animateTransition(duration: duration)
+        }
+        for animator in runningAnimations {
+            animator.pauseAnimation()
+            animationProgressWhenInterrupted = animator.fractionComplete
+        }
+    }
     
-            func updateInteractiveTransition(fractionCompleted:CGFloat) {
-                for animator in runningAnimations {
-                    animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
-                }
-            }
-    
-            func continueInteractiveTransition (){
-                for animator in runningAnimations {
-                    animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
-                }
-            }
-    
-        
+    func updateInteractiveTransition(fractionCompleted:CGFloat) {
+        for animator in runningAnimations {
+            animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+        }
+    }
+
+    func continueInteractiveTransition (){
+        for animator in runningAnimations {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
+    }
 }
 
 //MARK: - CLLocationManagerDelegate Methods
@@ -164,7 +169,7 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
+        updateViewWithNoInternetConnection()
     }
 }
 
@@ -173,15 +178,18 @@ extension ViewController: CLLocationManagerDelegate {
 extension ViewController: WeatherManagerDelegate {
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
+        // execute code block after all refresh weather animations are completed
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
-            self.weatherConditionImageView.image = UIImage(named: weather.conditionImage)
+            self.weatherBrickImageView.image = UIImage(named: weather.conditionImage)
             if weather.windSpeed >= 15 {
-                self.weatherConditionImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
+                self.weatherBrickImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
             }
             self.temperatureLabel.text = "\(weather.temperatureString)°"
             self.weatherConditionLabel.text = weather.condition
             
-            let fullString = NSMutableAttributedString(string: "")
+            
+            // create attributedString with png images and assign it to locationLabel attributed text property
+            let attributedString = NSMutableAttributedString(string: "")
             
             let image1Attachment = NSTextAttachment()
             image1Attachment.image = UIImage(systemName: "paperplane.fill")?.withTintColor(self.weatherConditionLabel.textColor)
@@ -191,21 +199,17 @@ extension ViewController: WeatherManagerDelegate {
             image2Attachment.image = UIImage(systemName: "magnifyingglass")?.withTintColor(self.weatherConditionLabel.textColor)
             let image2String = NSAttributedString(attachment: image2Attachment)
             
-            fullString.append(image1String)
-            fullString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
-            fullString.append(image2String)
+            attributedString.append(image1String)
+            attributedString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
+            attributedString.append(image2String)
             
-            self.locationLabel.attributedText = fullString
-            print(1)
+            self.locationLabel.attributedText = attributedString
         })
     }
     
     func didFailWithError(error: Error) {
         DispatchQueue.main.async {
-            self.weatherConditionImageView.image = UIImage(named: "noInternet.png")
-            self.temperatureLabel.text = "_ _"
-            self.weatherConditionLabel.text = "_"
-            self.locationLabel.text = "_ _"
+            self.updateViewWithNoInternetConnection()
         }
     }
 }
@@ -213,26 +217,11 @@ extension ViewController: WeatherManagerDelegate {
 //MARK: - CustomAlert Delegate Methods
 
 extension ViewController: CustomAlertDelegate {
-    func updateView() {
-        weatherConditionImageView.isHidden = false
-        temperatureLabel.isHidden = false
-        weatherConditionLabel.isHidden = false
-        locationLabel.isHidden = false
-        infoButton.isHidden = false
-    }
-}
-
-//MARK: - UIButton Extension
-
-extension UIButton {
-    func applyGradient(colors: [CGColor]) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colors
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.frame = self.bounds
-        gradientLayer.cornerRadius = 15
-        gradientLayer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        self.layer.insertSublayer(gradientLayer, at: 0)
+    func updateView(isHidden: Bool) {
+        weatherBrickImageView.isHidden = isHidden
+        temperatureLabel.isHidden = isHidden
+        weatherConditionLabel.isHidden = isHidden
+        locationLabel.isHidden = isHidden
+        infoButton.isHidden = isHidden
     }
 }
