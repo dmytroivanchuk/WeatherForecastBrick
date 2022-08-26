@@ -16,10 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var infoButton: UIButton!
     
-    let customAlert = CustomAlert()
-    
     let locationManager = CLLocationManager()
     var weatherManager = WeatherManager()
+    let customAlert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +80,6 @@ class ViewController: UIViewController {
                 switch recognzier.state {
                 case .ended:
                     animateTransition(duration: 0.2)
-                    locationManager.startUpdatingLocation()
-                    tapticFeedback.notificationOccurred(.success)
                 default:
                     break
                 }
@@ -99,8 +96,6 @@ class ViewController: UIViewController {
                     updateInteractiveTransition(fractionCompleted: fractionComplete)
                 case .ended:
                     continueInteractiveTransition()
-                    locationManager.startUpdatingLocation()
-                    tapticFeedback.notificationOccurred(.success)
                 default:
                     break
                 }
@@ -115,11 +110,19 @@ class ViewController: UIViewController {
                 runningAnimations.append(frameAnimator)
                 
                 frameAnimator.addCompletion { _ in
-                    self.runningAnimations.removeAll()
+                    
                     let backframeAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                         self.weatherConditionImageView.frame.origin.y -= 50
                     }
                     backframeAnimator.startAnimation()
+                    self.runningAnimations.append(backframeAnimator)
+                    
+                    backframeAnimator.addCompletion { _ in
+                        self.runningAnimations.removeAll()
+                        
+                        self.locationManager.startUpdatingLocation()
+                        self.tapticFeedback.notificationOccurred(.success)
+                    }
                 }
             }
     
@@ -152,7 +155,7 @@ class ViewController: UIViewController {
 
 extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
+        if let location = locations.first {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
@@ -170,19 +173,22 @@ extension ViewController: CLLocationManagerDelegate {
 extension ViewController: WeatherManagerDelegate {
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
             self.weatherConditionImageView.image = UIImage(named: weather.conditionImage)
+            if weather.windSpeed >= 15 {
+                self.weatherConditionImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
+            }
             self.temperatureLabel.text = "\(weather.temperatureString)°"
             self.weatherConditionLabel.text = weather.condition
             
             let fullString = NSMutableAttributedString(string: "")
             
             let image1Attachment = NSTextAttachment()
-            image1Attachment.image = UIImage(systemName: "paperplane.fill")
+            image1Attachment.image = UIImage(systemName: "paperplane.fill")?.withTintColor(self.weatherConditionLabel.textColor)
             let image1String = NSAttributedString(attachment: image1Attachment)
             
             let image2Attachment = NSTextAttachment()
-            image2Attachment.image = UIImage(systemName: "magnifyingglass")
+            image2Attachment.image = UIImage(systemName: "magnifyingglass")?.withTintColor(self.weatherConditionLabel.textColor)
             let image2String = NSAttributedString(attachment: image2Attachment)
             
             fullString.append(image1String)
@@ -191,15 +197,16 @@ extension ViewController: WeatherManagerDelegate {
             
             self.locationLabel.attributedText = fullString
             print(1)
-        }
+        })
     }
     
     func didFailWithError(error: Error) {
-        weatherConditionImageView.image = UIImage(named: "noInternet.png")
-        temperatureLabel.text = "_ _"
-        weatherConditionLabel.text = "_"
-        locationLabel.text = "_ _"
-        
+        DispatchQueue.main.async {
+            self.weatherConditionImageView.image = UIImage(named: "noInternet.png")
+            self.temperatureLabel.text = "_ _"
+            self.weatherConditionLabel.text = "_"
+            self.locationLabel.text = "_ _"
+        }
     }
 }
 
