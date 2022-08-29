@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet var infoButton: UIButton!
     
     private let locationManager = CLLocationManager()
-    private var weatherManager = WeatherManager()
+    private var weatherManager = WeatherManager(urlSession: URLSession.shared)
     private let customAlert = CustomAlert()
     
     override func viewDidLoad() {

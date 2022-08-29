@@ -15,6 +15,12 @@ protocol WeatherManagerDelegate {
 // create WeatherManager struct, responsible for fetching current weather data using public API, based on user's coordinates
 struct WeatherManager {
     
+    init(urlSession: URLSession) {
+        self.urlSession = urlSession
+    }
+    
+    let urlSession: URLSession
+    
     var weatherURL: String {
         var keys: NSDictionary?
 
@@ -37,12 +43,11 @@ struct WeatherManager {
     func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
         performRequest(with: urlString)
-        print(urlString)
     }
     
     func performRequest(with urlString: String) {
         if let url = URL(string: urlString) {
-            let session = URLSession.shared
+            let session = urlSession
             let task = session.dataTask(with: url) { data, response, error in
                 if error != nil {
                     delegate?.didFailWithError(error: error!)
