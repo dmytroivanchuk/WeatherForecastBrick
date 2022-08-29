@@ -38,4 +38,13 @@ struct WeatherModel {
             return "sun.png"
         }
     }
+    
+    init(weatherData: WeatherData) {
+        conditionId = weatherData.weather[0].id
+        condition = weatherData.weather[0].description
+        temperature = weatherData.main.temp
+        windSpeed = weatherData.wind.speed
+        countryCode = weatherData.sys.country
+        cityName = weatherData.name
+    }
 }

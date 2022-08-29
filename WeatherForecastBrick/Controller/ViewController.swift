@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         infoButton.layer.shadowOpacity = 0.3
     }
     
-    func updateViewWithNoInternetConnection() {
+    func updateViewWithError() {
         self.weatherBrickImageView.image = UIImage(named: "noInternet.png")
         self.temperatureLabel.text = "_ _"
         self.weatherConditionLabel.text = "_"
@@ -169,7 +169,7 @@ extension ViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        updateViewWithNoInternetConnection()
+        updateViewWithError()
     }
 }
 
@@ -209,7 +209,7 @@ extension ViewController: WeatherManagerDelegate {
     
     func didFailWithError(error: Error) {
         DispatchQueue.main.async {
-            self.updateViewWithNoInternetConnection()
+            self.updateViewWithError()
         }
     }
 }
@@ -218,10 +218,7 @@ extension ViewController: WeatherManagerDelegate {
 
 extension ViewController: CustomAlertDelegate {
     func updateView(isHidden: Bool) {
-        weatherBrickImageView.isHidden = isHidden
-        temperatureLabel.isHidden = isHidden
-        weatherConditionLabel.isHidden = isHidden
-        locationLabel.isHidden = isHidden
-        infoButton.isHidden = isHidden
+        [weatherBrickImageView, temperatureLabel, weatherConditionLabel, locationLabel, infoButton].forEach { $0.isHidden = isHidden
+        }
     }
 }

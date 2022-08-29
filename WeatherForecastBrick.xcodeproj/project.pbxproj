@@ -21,6 +21,7 @@
 		0208715728B4327E0027910B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715628B4327E0027910B /* WeatherModel.swift */; };
 		0208715928B432BC0027910B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715828B432BC0027910B /* WeatherData.swift */; };
 		0208715F28B682E50027910B /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715E28B682E40027910B /* CustomAlert.swift */; };
+		027DEC7B28BCE239001F69F7 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027DEC7A28BCE239001F69F7 /* Keys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		0208715628B4327E0027910B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
 		0208715828B432BC0027910B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		0208715E28B682E40027910B /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		027DEC7A28BCE239001F69F7 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				0208713D28B402380027910B /* Assets.xcassets */,
 				0208714228B402380027910B /* Info.plist */,
 				0208715028B407D80027910B /* Fonts */,
+				027DEC7A28BCE239001F69F7 /* Keys.plist */,
 			);
 			path = WeatherForecastBrick;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				027DEC7B28BCE239001F69F7 /* Keys.plist in Resources */,
 				0208714928B407930027910B /* Ubuntu-Light.ttf in Resources */,
 				0208714128B402380027910B /* LaunchScreen.storyboard in Resources */,
 				0208714E28B407CA0027910B /* Ubuntu-Medium.ttf in Resources */,
