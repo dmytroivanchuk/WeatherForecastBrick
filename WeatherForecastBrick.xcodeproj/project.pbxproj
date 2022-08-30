@@ -13,6 +13,15 @@
 		0208713C28B402360027910B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0208713A28B402360027910B /* Main.storyboard */; };
 		0208713E28B402380027910B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0208713D28B402380027910B /* Assets.xcassets */; };
 		0208714128B402380027910B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0208713F28B402380027910B /* LaunchScreen.storyboard */; };
+		0208714928B407930027910B /* Ubuntu-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0208714828B407930027910B /* Ubuntu-Light.ttf */; };
+		0208714B28B407A50027910B /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0208714A28B407A50027910B /* Ubuntu-Regular.ttf */; };
+		0208714E28B407CA0027910B /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0208714C28B407CA0027910B /* Ubuntu-Medium.ttf */; };
+		0208714F28B407CA0027910B /* Ubuntu-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0208714D28B407CA0027910B /* Ubuntu-Bold.ttf */; };
+		0208715528B431C80027910B /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715428B431C80027910B /* WeatherManager.swift */; };
+		0208715728B4327E0027910B /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715628B4327E0027910B /* WeatherModel.swift */; };
+		0208715928B432BC0027910B /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715828B432BC0027910B /* WeatherData.swift */; };
+		0208715F28B682E50027910B /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0208715E28B682E40027910B /* CustomAlert.swift */; };
+		027DEC7B28BCE239001F69F7 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 027DEC7A28BCE239001F69F7 /* Keys.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +33,15 @@
 		0208713D28B402380027910B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0208714028B402380027910B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0208714228B402380027910B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0208714828B407930027910B /* Ubuntu-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Light.ttf"; sourceTree = "<group>"; };
+		0208714A28B407A50027910B /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		0208714C28B407CA0027910B /* Ubuntu-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Medium.ttf"; sourceTree = "<group>"; };
+		0208714D28B407CA0027910B /* Ubuntu-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-Bold.ttf"; sourceTree = "<group>"; };
+		0208715428B431C80027910B /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
+		0208715628B4327E0027910B /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		0208715828B432BC0027910B /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
+		0208715E28B682E40027910B /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
+		027DEC7A28BCE239001F69F7 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +76,54 @@
 			children = (
 				0208713428B402360027910B /* AppDelegate.swift */,
 				0208713628B402360027910B /* SceneDelegate.swift */,
-				0208713828B402360027910B /* ViewController.swift */,
-				0208713A28B402360027910B /* Main.storyboard */,
+				0208715228B429950027910B /* Model */,
+				0208715328B429A50027910B /* View */,
+				0208715128B429360027910B /* Controller */,
 				0208713D28B402380027910B /* Assets.xcassets */,
-				0208713F28B402380027910B /* LaunchScreen.storyboard */,
 				0208714228B402380027910B /* Info.plist */,
+				0208715028B407D80027910B /* Fonts */,
+				027DEC7A28BCE239001F69F7 /* Keys.plist */,
 			);
 			path = WeatherForecastBrick;
+			sourceTree = "<group>";
+		};
+		0208715028B407D80027910B /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				0208714828B407930027910B /* Ubuntu-Light.ttf */,
+				0208714A28B407A50027910B /* Ubuntu-Regular.ttf */,
+				0208714C28B407CA0027910B /* Ubuntu-Medium.ttf */,
+				0208714D28B407CA0027910B /* Ubuntu-Bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0208715128B429360027910B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0208713828B402360027910B /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0208715228B429950027910B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0208715428B431C80027910B /* WeatherManager.swift */,
+				0208715628B4327E0027910B /* WeatherModel.swift */,
+				0208715828B432BC0027910B /* WeatherData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0208715328B429A50027910B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0208713A28B402360027910B /* Main.storyboard */,
+				0208713F28B402380027910B /* LaunchScreen.storyboard */,
+				0208715E28B682E40027910B /* CustomAlert.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +184,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				027DEC7B28BCE239001F69F7 /* Keys.plist in Resources */,
+				0208714928B407930027910B /* Ubuntu-Light.ttf in Resources */,
 				0208714128B402380027910B /* LaunchScreen.storyboard in Resources */,
+				0208714E28B407CA0027910B /* Ubuntu-Medium.ttf in Resources */,
 				0208713E28B402380027910B /* Assets.xcassets in Resources */,
+				0208714F28B407CA0027910B /* Ubuntu-Bold.ttf in Resources */,
+				0208714B28B407A50027910B /* Ubuntu-Regular.ttf in Resources */,
 				0208713C28B402360027910B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,7 +204,11 @@
 			files = (
 				0208713928B402360027910B /* ViewController.swift in Sources */,
 				0208713528B402360027910B /* AppDelegate.swift in Sources */,
+				0208715528B431C80027910B /* WeatherManager.swift in Sources */,
 				0208713728B402360027910B /* SceneDelegate.swift in Sources */,
+				0208715928B432BC0027910B /* WeatherData.swift in Sources */,
+				0208715728B4327E0027910B /* WeatherModel.swift in Sources */,
+				0208715F28B682E50027910B /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,8 +361,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +373,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -321,8 +390,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -332,7 +402,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
