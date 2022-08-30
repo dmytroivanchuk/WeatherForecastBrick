@@ -178,8 +178,10 @@ extension ViewController: CLLocationManagerDelegate {
 extension ViewController: WeatherManagerDelegate {
     
     func didUpdateWeather(_ weatherManager: WeatherManager, weather: WeatherModel) {
-        // execute code block after all refresh weather animations are completed
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4, execute: {
+        let totalWeatherBrickAnimationTime = 0.4
+        
+        // execute code block after all weather brick animations are completed
+        DispatchQueue.main.asyncAfter(deadline: .now() + totalWeatherBrickAnimationTime, execute: {
             self.weatherBrickImageView.image = UIImage(named: weather.conditionImage)
             if weather.windSpeed >= 15 {
                 self.weatherBrickImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
