@@ -7,6 +7,7 @@
 
 import XCTest
 
+// create MockUrlProtocol class, responsible for mocking URLSession
 class MockURLProtocol: URLProtocol {
     static var error: Error?
     static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data))?

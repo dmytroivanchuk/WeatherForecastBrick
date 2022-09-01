@@ -20,6 +20,7 @@ class WeatherForecastBrickUITestsLaunchTests: XCTestCase {
 
     func testLaunch() throws {
         let app = XCUIApplication()
+        app.launchEnvironment = ["ENV" : "UITEST"]
         app.launch()
 
         // Insert steps here to perform after app launch but before taking a screenshot,

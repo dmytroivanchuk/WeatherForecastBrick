@@ -7,8 +7,12 @@
 
 import CoreLocation
 
+protocol WeatherManagerProtocol {
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (WeatherModel?) -> Void)
+}
+
 // create WeatherManager struct, responsible for fetching current weather data using public API, based on user's coordinates
-struct WeatherManager {
+struct WeatherManager: WeatherManagerProtocol {
     
     init(urlSession: URLSession) {
         self.urlSession = urlSession

@@ -53,7 +53,7 @@ class WeatherForecastBrickUnitTests: XCTestCase {
             return (HTTPURLResponse(), self.generateMockData(isValidData: true))
         }
         
-        // set expected results to assert
+        // set expected results to be asserted
         let expectedConditionId = 803
         let expectedCondition = "broken clouds"
         let expectedTemperature = 28.78

@@ -17,8 +17,10 @@ class ViewController: UIViewController {
     @IBOutlet var infoButton: UIButton!
     
     private let locationManager = CLLocationManager()
-    private var weatherManager = WeatherManager(urlSession: URLSession.shared)
     private let customAlert = CustomAlert()
+    
+    // assign appropriate http client, based on app launch environment. For UI tests assign mock http client, for production assign default http client
+    private var weatherManager = HTTPClientFactory.returnWeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()

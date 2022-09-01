@@ -10,15 +10,20 @@ import SnapshotTesting
 
 class WeatherForecastBrickUITests: XCTestCase {
 
+    private var app: XCUIApplication!
+    
     override func setUpWithError() throws {
         continueAfterFailure = false
+        app = XCUIApplication()
+        
+        // create custom app environment, later accessible through ProcessInfo.processInfo.environment property to set mock http client for UI tests
+        app.launchEnvironment = ["ENV" : "UITEST"]
+        
+        app.launch()
     }
 
     // set the record parameter to true in assertSnapshot statements each time running the test to record appropriate snapshots
     func test_infoButtonPressedAndBrickImagePulled_shouldMatchSnapshots() throws {
-        let app = XCUIApplication()
-        app.launch()
-
         sleep(1)
         let initialViewScreenshot = app.screenshot().image
         assertSnapshot(matching: initialViewScreenshot, as: .image(precision: 0.99, scale: nil))
@@ -36,10 +41,7 @@ class WeatherForecastBrickUITests: XCTestCase {
     }
     
     func test_infoButtonPressed_shouldPresentCustomAlert() throws {
-        let app = XCUIApplication()
-        app.launch()
         app.buttons["INFO"].tap()
-        
         
         XCTAssert(app.staticTexts["INFO"].exists)
         
@@ -60,7 +62,7 @@ class WeatherForecastBrickUITests: XCTestCase {
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
+                app.launch()
             }
         }
     }
