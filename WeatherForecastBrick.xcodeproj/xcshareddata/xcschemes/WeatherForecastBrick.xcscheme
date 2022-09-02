@@ -26,8 +26,39 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "0208713028B402360027910B"
+            BuildableName = "WeatherForecastBrick.app"
+            BlueprintName = "WeatherForecastBrick"
+            ReferencedContainer = "container:WeatherForecastBrick.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "026142F628BE3BA600B71C80"
+               BuildableName = "WeatherForecastBrickUITests.xctest"
+               BlueprintName = "WeatherForecastBrickUITests"
+               ReferencedContainer = "container:WeatherForecastBrick.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "0261430528BE3C7A00B71C80"
+               BuildableName = "WeatherForecastBrickUnitTests.xctest"
+               BlueprintName = "WeatherForecastBrickUnitTests"
+               ReferencedContainer = "container:WeatherForecastBrick.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -51,7 +82,7 @@
          </BuildableReference>
       </BuildableProductRunnable>
       <LocationScenarioReference
-         identifier = "New York, NY, USA"
+         identifier = "Mumbai, India"
          referenceType = "1">
       </LocationScenarioReference>
    </LaunchAction>
