@@ -8,7 +8,7 @@
 import CoreLocation
 
 protocol WeatherManagerProtocol {
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (WeatherModel?) -> Void)
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (Result<WeatherModel, WeatherManagerError>) -> Void)
 }
 
 // create WeatherManager struct, responsible for fetching current weather data using public API, based on user's coordinates
@@ -37,20 +37,20 @@ struct WeatherManager: WeatherManagerProtocol {
         }
     }
     
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (WeatherModel?) -> Void) {
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (Result<WeatherModel, WeatherManagerError>) -> Void) {
         let urlString = "\(weatherURL)&lat=\(latitude)&lon=\(longitude)"
         if let url = URL(string: urlString) {
             let session = urlSession
             let task = session.dataTask(with: url) { data, response, error in
                 if error != nil {
-                    completionHandler(nil)
+                    completionHandler(Result.failure(WeatherManagerError.urlSessionError))
                     return
                 }
                 if let weatherData = data {
                     if let weatherModel = parseJSON(weatherData) {
-                        completionHandler(weatherModel)
+                        completionHandler(Result.success(weatherModel))
                     } else {
-                        completionHandler(nil)
+                        completionHandler(Result.failure(WeatherManagerError.parseJSONError))
                     }
                 }
             }
@@ -68,4 +68,9 @@ struct WeatherManager: WeatherManagerProtocol {
             return nil
         }
     }
+}
+
+enum WeatherManagerError: Error {
+    case urlSessionError
+    case parseJSONError
 }

@@ -64,14 +64,19 @@ class WeatherForecastBrickUnitTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Fetch expected weather data")
         
         // Make mock api network request to fetch weather data
-        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { weatherModel in
-            XCTAssertEqual(weatherModel?.conditionId, expectedConditionId)
-            XCTAssertEqual(weatherModel?.condition, expectedCondition)
-            XCTAssertEqual(weatherModel?.temperature, expectedTemperature)
-            XCTAssertEqual(weatherModel?.windSpeed, expectedwindSpeed)
-            XCTAssertEqual(weatherModel?.countryCode, expectedCountryCode)
-            XCTAssertEqual(weatherModel?.cityName, expectedCityName)
-            expectation.fulfill()
+        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { result in
+            switch result {
+            case .success(let weatherModel):
+                XCTAssertEqual(weatherModel.conditionId, expectedConditionId)
+                XCTAssertEqual(weatherModel.condition, expectedCondition)
+                XCTAssertEqual(weatherModel.temperature, expectedTemperature)
+                XCTAssertEqual(weatherModel.windSpeed, expectedwindSpeed)
+                XCTAssertEqual(weatherModel.countryCode, expectedCountryCode)
+                XCTAssertEqual(weatherModel.cityName, expectedCityName)
+                expectation.fulfill()
+            case .failure(let error):
+                XCTFail("Error was not expected: \(error)")
+              }
         }
         wait(for: [expectation], timeout: 1)
     }
@@ -83,9 +88,17 @@ class WeatherForecastBrickUnitTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "Fail fetching expected weather data")
         
-        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { weatherModel in
-            XCTAssertNil(weatherModel)
-            expectation.fulfill()
+        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Success response was not expected.")
+            case .failure(let error):
+                guard error == WeatherManagerError.parseJSONError else {
+                    XCTFail("Incorrect error received.")
+                    return
+                }
+                expectation.fulfill()
+            }
         }
         wait(for: [expectation], timeout: 1)
     }
@@ -98,9 +111,17 @@ class WeatherForecastBrickUnitTests: XCTestCase {
         
         let expectation = XCTestExpectation(description: "Fail fetching expected weather data")
         
-        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { weatherModel in
-            XCTAssertNil(weatherModel)
-            expectation.fulfill()
+        sut.fetchWeather(latitude: testLatitude, longitude: testLongitude) { result in
+            switch result {
+            case .success(_):
+                XCTFail("Success response was not expected.")
+            case .failure(let error):
+                guard error == WeatherManagerError.urlSessionError else {
+                    XCTFail("Incorrect error received.")
+                    return
+                }
+                expectation.fulfill()
+            }
         }
         wait(for: [expectation], timeout: 1)
     }

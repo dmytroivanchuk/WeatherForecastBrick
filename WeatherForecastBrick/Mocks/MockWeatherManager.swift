@@ -10,13 +10,15 @@ import CoreLocation
 // create MockWeatherManager class, responsible for mocking default http client for UI tests
 class MockWeatherManager: WeatherManagerProtocol {
     
-    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (WeatherModel?) -> Void) {
+    func fetchWeather(latitude: CLLocationDegrees, longitude: CLLocationDegrees, completion completionHandler: @escaping (Result<WeatherModel, WeatherManagerError>) -> Void) {
         // generate data representation of valid .json file
         guard let filePathString = Bundle(for: type(of: self)).path(forResource: "apiValidWeatherData", ofType: "json") else {
-            fatalError(".json file is not found.")
+            completionHandler(Result.failure(WeatherManagerError.parseJSONError))
+            return
         }
         guard let json = try? String(contentsOfFile: filePathString, encoding: .utf8) else {
-            fatalError("Unable to convert .json file to String.")
+            completionHandler(Result.failure(WeatherManagerError.parseJSONError))
+            return
         }
 
         // decode data from valid .json file
@@ -24,9 +26,9 @@ class MockWeatherManager: WeatherManagerProtocol {
         do {
             let decodedData = try decoder.decode(WeatherData.self, from: json.data(using: .utf8)!)
             let weatherModel = WeatherModel(weatherData: decodedData)
-            completionHandler(weatherModel)
+            completionHandler(Result.success(weatherModel))
         } catch {
-            completionHandler(nil)
+            completionHandler(Result.failure(WeatherManagerError.parseJSONError))
         }
     }
 }

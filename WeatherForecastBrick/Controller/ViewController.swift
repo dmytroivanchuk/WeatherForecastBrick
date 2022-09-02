@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     private let customAlert = CustomAlert()
     
     // assign appropriate http client, based on app launch environment. For UI tests assign mock http client, for production assign default http client
-    private var weatherManager = HTTPClientFactory.returnWeatherManager()
+    private var weatherManager = HTTPClientFactory.returnWeatherManager(forEnvironment: ProcessInfo.processInfo.environment["ENV"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,43 +165,47 @@ extension ViewController: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
             let lat = location.coordinate.latitude
             let long = location.coordinate.longitude
-            weatherManager.fetchWeather(latitude: lat, longitude: long) { weatherModel in
-                guard let weather = weatherModel else {
+            
+            weatherManager.fetchWeather(latitude: lat, longitude: long) { [weak self] result in
+                
+                switch result {
+                case .success(let weather):
+                    
+                    let totalWeatherBrickAnimationTime = 0.4
+                    
+                    // execute code block after all weather brick animations are completed
+                    DispatchQueue.main.asyncAfter(deadline: .now() + totalWeatherBrickAnimationTime, execute: {
+                        self?.weatherBrickImageView.image = UIImage(named: weather.conditionImage)
+                        if weather.windSpeed >= 15 {
+                            self?.weatherBrickImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
+                        }
+                        self?.temperatureLabel.text = "\(weather.temperatureString)°"
+                        self?.weatherConditionLabel.text = weather.condition
+                        
+                        
+                        // create attributedString with png images and assign it to locationLabel attributed text property
+                        let attributedString = NSMutableAttributedString(string: "")
+                        
+                        let image1Attachment = NSTextAttachment()
+                        image1Attachment.image = UIImage(systemName: "paperplane.fill")?.withTintColor(self?.weatherConditionLabel.textColor ?? .clear)
+                        let image1String = NSAttributedString(attachment: image1Attachment)
+                        
+                        let image2Attachment = NSTextAttachment()
+                        image2Attachment.image = UIImage(systemName: "magnifyingglass")?.withTintColor(self?.weatherConditionLabel.textColor ?? .clear)
+                        let image2String = NSAttributedString(attachment: image2Attachment)
+                        
+                        attributedString.append(image1String)
+                        attributedString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
+                        attributedString.append(image2String)
+                        
+                        self?.locationLabel.attributedText = attributedString
+                    })
+                
+                case .failure(_):
                     DispatchQueue.main.async {
-                        self.updateViewWithError()
+                        self?.updateViewWithError()
                     }
-                    return
                 }
-                
-                let totalWeatherBrickAnimationTime = 0.4
-                
-                // execute code block after all weather brick animations are completed
-                DispatchQueue.main.asyncAfter(deadline: .now() + totalWeatherBrickAnimationTime, execute: {
-                    self.weatherBrickImageView.image = UIImage(named: weather.conditionImage)
-                    if weather.windSpeed >= 15 {
-                        self.weatherBrickImageView.transform = CGAffineTransform(rotationAngle: .pi / -15)
-                    }
-                    self.temperatureLabel.text = "\(weather.temperatureString)°"
-                    self.weatherConditionLabel.text = weather.condition
-                    
-                    
-                    // create attributedString with png images and assign it to locationLabel attributed text property
-                    let attributedString = NSMutableAttributedString(string: "")
-                    
-                    let image1Attachment = NSTextAttachment()
-                    image1Attachment.image = UIImage(systemName: "paperplane.fill")?.withTintColor(self.weatherConditionLabel.textColor)
-                    let image1String = NSAttributedString(attachment: image1Attachment)
-                    
-                    let image2Attachment = NSTextAttachment()
-                    image2Attachment.image = UIImage(systemName: "magnifyingglass")?.withTintColor(self.weatherConditionLabel.textColor)
-                    let image2String = NSAttributedString(attachment: image2Attachment)
-                    
-                    attributedString.append(image1String)
-                    attributedString.append(NSAttributedString(string: " \(weather.cityName), \(weather.countryName ?? "") "))
-                    attributedString.append(image2String)
-                    
-                    self.locationLabel.attributedText = attributedString
-                })
             }
         }
     }
